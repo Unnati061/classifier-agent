@@ -48,49 +48,24 @@ Classifier Agent/
 ├── src/
 │   ├── components/
 │   │   ├── ui/                    # Shadcn UI components
-│   │   │   ├── accordion.tsx
-│   │   │   ├── alert-dialog.tsx
-│   │   │   ├── badge.tsx
-│   │   │   ├── button.tsx
-│   │   │   ├── card.tsx
-│   │   │   ├── tabs.tsx
-│   │   │   ├── toast.tsx
-│   │   │   └── ... (other UI components)
 │   │   ├── AgentDashboard.tsx     # Agent status and metrics
 │   │   ├── FileUpload.tsx         # Drag & drop file upload
 │   │   ├── MemoryViewer.tsx       # Shared memory logs viewer
 │   │   └── ProcessingFlow.tsx     # Visual workflow display
 │   ├── hooks/
-│   │   ├── use-mobile.tsx
-│   │   └── use-toast.ts
 │   ├── lib/
-│   │   └── utils.ts               # Utility functions
 │   ├── pages/
-│   │   ├── DocumentProcessor.tsx  # Main application page
-│   │   ├── Index.tsx
-│   │   └── NotFound.tsx
 │   ├── services/                  # AI Agent Services
-│   │   ├── classifierAgent.ts     # Routes documents to agents
-│   │   ├── emailAgent.ts          # Processes email content
-│   │   ├── jsonAgent.ts           # Handles JSON validation
-│   │   └── pdfAgent.ts            # Extracts PDF data
 │   ├── App.tsx                    # Main app component
 │   ├── index.css                  # Global styles
 │   ├── main.tsx                   # React entry point
 │   └── vite-env.d.ts
 ├── .gitignore
 ├── README.md
-├── bun.lockb
 ├── components.json                # Shadcn UI config
-├── eslint.config.js
 ├── index.html
 ├── package-lock.json
 ├── package.json
-├── postcss.config.js
-├── tailwind.config.ts
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
 └── vite.config.ts
 
 

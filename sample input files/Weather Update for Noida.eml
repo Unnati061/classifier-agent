@@ -1,0 +1,87 @@
+Delivered-To: unnatisinghrajawat@gmail.com
+Received: by 2002:a05:7412:3a8b:b0:159:b2ce:98df with SMTP id na11csp1419775rdb;
+        Fri, 30 May 2025 13:05:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEv60p4XGy0+NMVnI27aVF77JLaiEUjpCxvm1JATA/SAGqThm4cVTrKzR0yNbiP/aWqCvn0
+X-Received: by 2002:a05:600c:1da6:b0:442:d9fb:d9a5 with SMTP id 5b1f17b1804b1-450d6b7cc08mr40896005e9.9.1748635545835;
+        Fri, 30 May 2025 13:05:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1748635545; cv=none;
+        d=google.com; s=arc-20240605;
+        b=DToYQyFqZdIo5chypGHRWwV+6BxyJV8emMFLGz6ElIYn2TwXcPydeFS5ElQ8wjOVPh
+         NoBUVrQIfiBie47Y0Z2LNgLXWsLA5lp8cJ/Laz2cV3WmpWqy9lao4+F3t4oFW/AiNCs8
+         aTLrhMrtckpgjZP5fKP3X8ntTNX3UBdVXZE+rTuSb9+mYZd0W2t6YUKFwO34qKcCD1Ht
+         /UX75frbmF8yd+7wMyaFJcNqJBihibLi1vKsZM+nYTx6sXUVUNTuAl2VGehQ0TENm/ow
+         wRLjHEDh9D4HU0mPDNQHdvtX2sN8oN9p/1jMYiE8sqf6Mp3uA1l4CiQ2rsCf+EoIBb5F
+         K0qw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:mime-version:list-unsubscribe-post:from
+         :reply-to:origin-messageid:message-id:subject:date:to
+         :list-unsubscribe:feedback-id:dkim-signature;
+        bh=lB8OK+p2AJePqqOghUvn+5ToF/erJM8K+pPVAt7Vjx4=;
+        fh=OE5wwjS2qqlwymxI6WnDBQJi7iB6iPv8VoimK7VKLFU=;
+        b=OHT6tNfU+SNvlV2t3ZiL9U6GdP82wiLEYm8L0pMq3AtKvAg1yH1jJLFnp6oDaJFmWr
+         aZVhP9EHZRRuPpE5cGaK7CtClBeBnFfEVkRgwCd9l9YG4lOWj8lr3VT5+0gs0+qFrIul
+         S8UWOvjq2bZVKsPqRw7cbhYnzJZaQfkSZxMN2j9b0ekhZylyc7dAh7qU9bxoxWO2ZLZ7
+         G87bMFbFYAVVlYdv8uFA/6nxFLOsSHJh5j21zg+f4jeCZEqS0SInLCefvTHxf1WOMiuZ
+         JuuxAXhkiDiAvisdtKdWLej1Fa5+6CiDOiBE2SLD6xEhes5YqXXVuGUa/A2oa7pIHKAw
+         4ScQ==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@9173929.brevosend.com header.s=mail header.b=xigB3WTx;
+       spf=pass (google.com: domain of bounces-327292246-3596917957@gy.d.sender-sib.com designates 77.32.148.25 as permitted sender) smtp.mailfrom=bounces-327292246-3596917957@gy.d.sender-sib.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=brevosend.com
+Return-Path: <bounces-327292246-3596917957@gy.d.sender-sib.com>
+Received: from gy.d.sender-sib.com (gy.d.sender-sib.com. [77.32.148.25])
+        by mx.google.com with ESMTPS id 5b1f17b1804b1-450d6395468si20103195e9.48.2025.05.30.13.05.45
+        for <unnatisinghrajawat@gmail.com>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 May 2025 13:05:45 -0700 (PDT)
+Received-SPF: pass (google.com: domain of bounces-327292246-3596917957@gy.d.sender-sib.com designates 77.32.148.25 as permitted sender) client-ip=77.32.148.25;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@9173929.brevosend.com header.s=mail header.b=xigB3WTx;
+       spf=pass (google.com: domain of bounces-327292246-3596917957@gy.d.sender-sib.com designates 77.32.148.25 as permitted sender) smtp.mailfrom=bounces-327292246-3596917957@gy.d.sender-sib.com;
+       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=brevosend.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=9173929.brevosend.com;
+ q=dns/txt; s=mail; bh=lB8OK+p2AJePqqOghUvn+5ToF/erJM8K+pPVAt7Vjx4=;
+ h=from:reply-to:subject:date:to:mime-version:content-type:content-transfer-encoding:list-unsubscribe:x-csa-complaints:list-unsubscribe-post:message-id:x-sib-id:feedback-id;
+        b=xigB3WTxOlVPPKbYPKVuJLkuoJ7i6PPpqHzKIyCa9o81XmNSZOgHUM3xCVo+NPaymb5j1fszGz9t
+        9lpILeOKtAnkq8WtJqVqf4hNUj98as6SgfIxJKvByb7A6zA5iYYAoQG3uYAv7PTDrrumQef/75cu
+        H4w4x9k9zx5lpyWoYkU=
+Feedback-ID: 77.32.148.25:9173929_-1:9173929:Sendinblue
+List-Unsubscribe: <https://jbhdjcj.r.bh.d.sendibt3.com/tr/un/li/3xFQ70BhbWkpSIMrAl9iSSrHmsbQ1G6QuOHfys6dWb6DAXZznhYu1tsyzsgnw9yOHikihR6ovHFCzigb0EUkrGGiRFwW9uzro_FzQcbl3w-g8LGIbx7AK8ySktj9ICEzW2Mq93NBlHTv9uw4ZBU9sazZ1hrqKtBcx8cpcmVRPwQd0jMZZ8Gk8BYxloj0PlhvpsHr3aTIuiahEVXFVnrnYEh5lolOhGTJmmDaD_olXKPm3bjJJuEBoJIIClJt1HBawe-_>
+To: "Unnati" <unnatisinghrajawat@gmail.com>
+Date: Fri, 30 May 2025 20:05:45 +0000
+Subject: Weather Update for Noida
+X-sib-id: y81RE4EJziiVyA3KB1jx8djErrjbtujdSubAFAlgFI5T26p70EcywLdpBXnAeTUG3ExyRfhMEpYmryu0ddyGXizHm9zaFOTN1CdY0gWui4cGj9Rh7u2UjuUSGqjLEtd-4ZBa5LRq-MOB7LvSQ2Uc8TLV9SMEXVN5_RLWmBh4o6ah4DEUGSvmVUHy
+Message-Id: <202505302005.68430183737@smtp-relay.mailin.fr>
+Origin-messageId: <202505302005.68430183737@smtp-relay.mailin.fr>
+Reply-To: <unnatisinghrajawat@gmail.com>
+From: "Unnati" <unnatisinghrajawat@9173929.brevosend.com>
+X-CSA-Complaints: csa-complaints@eco.de
+X-Mailin-EID: MzI3MjkyMjQ2fnVubmF0aXNpbmdocmFqYXdhdEBnbWFpbC5jb21%2BPDIwMjUwNTMwMjAwNS42ODQzMDE4MzczN0BzbXRwLXJlbGF5Lm1haWxpbi5mcj5%2BZ3kuZC5zZW5kZXItc2liLmNvbQ%3D%3D
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-Api-Version:v3
+Mime-Version:1.0
+Content-Type:text/html; charset=utf-8
+Content-Transfer-Encoding:quoted-printable
+
+<html><head></head><body><img width=3D"1" height=3D"1" src=3D"https://jbhdj=
+cj.r.bh.d.sendibt3.com/tr/op/fB3TsXp9OY8dkK9ogA8kZYiba_2HwrS6rg5Amsd-mBRhtR=
+hx2BbNxWj9lCyrha4ffoZPJPrOpZCtKYe_WV2dDpri-UEx2Vz4q8MP477rXGFWHyj1n6G4buhll=
+V1UPbfUW3_8QJsn_5v18HPzgmbH2rzXGqAnqicBPWgKKiimU4ttFgJGP0jHKzCMv7KHsAHoCfQu=
+SFhZKpxuegHj2K3reI1WRfdaarszOvAozA" style=3D"mso-hide:all"/><p>Hi Unnati,</=
+p>
+
+<p>Thanks for submitting your details.</p>
+
+<p>Here&#39;s the current weather for <strong>Noida</strong>:</p>
+<ul>
+  <li>Temperature: 33 =C2=B0C</li>
+  <li>Condition: Clear</li>
+  <li>AQI: 223.11</li>
+</ul>
+
+<p>Stay safe and take care!</p>
+
+<p>Thanks,<br/>
+Unnati</p>
+</body></html>

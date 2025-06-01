@@ -1,0 +1,1096 @@
+{
+    "name": "Integration Webhooks",
+    "flow": [
+        {
+            "id": 1,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 2446847,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 947,
+                    "y": 121
+                },
+                "restore": {
+                    "parameters": {
+                        "hook": {
+                            "data": {
+                                "editable": "true"
+                            },
+                            "label": "weather"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook:gateway-webhook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 24,
+            "module": "json:ParseJSON",
+            "version": 1,
+            "parameters": {
+                "type": ""
+            },
+            "mapper": {
+                "json": "{{1.value}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1200,
+                    "y": -150
+                },
+                "restore": {
+                    "parameters": {
+                        "type": {
+                            "label": "Choose a data structure"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "type",
+                        "type": "udt",
+                        "label": "Data structure"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "json",
+                        "type": "text",
+                        "label": "JSON string",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 19,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                    {
+                        "name": "email_valid",
+                        "value": "true"
+                    },
+                    {
+                        "name": "email",
+                        "value": "{{24.email}}"
+                    },
+                    {
+                        "name": "full_name",
+                        "value": "{{24.fullName}}"
+                    },
+                    {
+                        "name": "city",
+                        "value": "{{24.city}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1500,
+                    "y": -150
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        },
+                        "variables": {
+                            "items": [
+                                null,
+                                null,
+                                null,
+                                null
+                            ]
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Variable name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "label": "Variable value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "email_valid",
+                        "type": "any",
+                        "label": "email_valid"
+                    },
+                    {
+                        "name": "email",
+                        "type": "any",
+                        "label": "email"
+                    },
+                    {
+                        "name": "full_name",
+                        "type": "any",
+                        "label": "full_name"
+                    },
+                    {
+                        "name": "city",
+                        "type": "any",
+                        "label": "city"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 3,
+            "module": "http:ActionSendData",
+            "version": 3,
+            "parameters": {
+                "handleErrors": true,
+                "useNewZLibDeCompress": true
+            },
+            "mapper": {
+                "ca": "",
+                "qs": [
+                    {
+                        "name": "key",
+                        "value": "7ebe8e8cd0de42899a6154850252805"
+                    },
+                    {
+                        "name": "q",
+                        "value": "{{19.city}}"
+                    },
+                    {
+                        "name": "aqi",
+                        "value": "yes"
+                    }
+                ],
+                "url": "https://api.weatherapi.com/v1/current.json",
+                "gzip": true,
+                "method": "get",
+                "headers": [],
+                "timeout": "",
+                "useMtls": false,
+                "authPass": "",
+                "authUser": "",
+                "bodyType": "",
+                "serializeUrl": false,
+                "shareCookies": false,
+                "parseResponse": false,
+                "followRedirect": true,
+                "useQuerystring": false,
+                "followAllRedirects": false,
+                "rejectUnauthorized": true
+            },
+            "metadata": {
+                "designer": {
+                    "x": 1800,
+                    "y": -150
+                },
+                "restore": {
+                    "expect": {
+                        "qs": {
+                            "mode": "chose",
+                            "items": [
+                                null,
+                                {
+                                    "name": {
+                                        "collapsed": true
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "collapsed": true
+                                    }
+                                }
+                            ]
+                        },
+                        "method": {
+                            "mode": "chose",
+                            "label": "GET"
+                        },
+                        "headers": {
+                            "mode": "chose"
+                        },
+                        "bodyType": {
+                            "label": "Empty"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "handleErrors",
+                        "type": "boolean",
+                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                        "required": true
+                    },
+                    {
+                        "name": "useNewZLibDeCompress",
+                        "type": "hidden"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "url",
+                        "type": "url",
+                        "label": "URL",
+                        "required": true
+                    },
+                    {
+                        "name": "serializeUrl",
+                        "type": "boolean",
+                        "label": "Serialize URL",
+                        "required": true
+                    },
+                    {
+                        "name": "method",
+                        "type": "select",
+                        "label": "Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "get",
+                                "head",
+                                "post",
+                                "put",
+                                "patch",
+                                "delete",
+                                "options"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "qs",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Query String"
+                    },
+                    {
+                        "name": "bodyType",
+                        "type": "select",
+                        "label": "Body type",
+                        "validate": {
+                            "enum": [
+                                "raw",
+                                "x_www_form_urlencoded",
+                                "multipart_form_data"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parseResponse",
+                        "type": "boolean",
+                        "label": "Parse response",
+                        "required": true
+                    },
+                    {
+                        "name": "authUser",
+                        "type": "text",
+                        "label": "User name"
+                    },
+                    {
+                        "name": "authPass",
+                        "type": "password",
+                        "label": "Password"
+                    },
+                    {
+                        "name": "timeout",
+                        "type": "uinteger",
+                        "label": "Timeout",
+                        "validate": {
+                            "max": 300,
+                            "min": 1
+                        }
+                    },
+                    {
+                        "name": "shareCookies",
+                        "type": "boolean",
+                        "label": "Share cookies with other HTTP modules",
+                        "required": true
+                    },
+                    {
+                        "name": "ca",
+                        "type": "cert",
+                        "label": "Self-signed certificate"
+                    },
+                    {
+                        "name": "rejectUnauthorized",
+                        "type": "boolean",
+                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                        "required": true
+                    },
+                    {
+                        "name": "followRedirect",
+                        "type": "boolean",
+                        "label": "Follow redirect",
+                        "required": true
+                    },
+                    {
+                        "name": "useQuerystring",
+                        "type": "boolean",
+                        "label": "Disable serialization of multiple same query string keys as arrays",
+                        "required": true
+                    },
+                    {
+                        "name": "gzip",
+                        "type": "boolean",
+                        "label": "Request compressed content",
+                        "required": true
+                    },
+                    {
+                        "name": "useMtls",
+                        "type": "boolean",
+                        "label": "Use Mutual TLS",
+                        "required": true
+                    },
+                    {
+                        "name": "followAllRedirects",
+                        "type": "boolean",
+                        "label": "Follow all redirect",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 20,
+            "module": "json:ParseJSON",
+            "version": 1,
+            "parameters": {
+                "type": ""
+            },
+            "mapper": {
+                "json": "{{3.data}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2081,
+                    "y": 105
+                },
+                "restore": {
+                    "parameters": {
+                        "type": {
+                            "label": "Choose a data structure"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "type",
+                        "type": "udt",
+                        "label": "Data structure"
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "json",
+                        "type": "text",
+                        "label": "JSON string",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 21,
+            "module": "util:SetVariables",
+            "version": 1,
+            "parameters": {},
+            "mapper": {
+                "scope": "roundtrip",
+                "variables": [
+                    {
+                        "name": "temperature",
+                        "value": "{{round(20.current.temp_c)}}"
+                    },
+                    {
+                        "name": "condition",
+                        "value": "{{20.current.condition.text}}"
+                    },
+                    {
+                        "name": "aqi",
+                        "value": "{{20.current.air_quality.pm2_5}}"
+                    },
+                    {
+                        "name": "location",
+                        "value": "{{20.location.name}}"
+                    }
+                ]
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2459,
+                    "y": 210
+                },
+                "restore": {
+                    "expect": {
+                        "scope": {
+                            "label": "One cycle"
+                        },
+                        "variables": {
+                            "items": [
+                                null,
+                                null,
+                                null,
+                                null
+                            ]
+                        }
+                    }
+                },
+                "expect": [
+                    {
+                        "name": "variables",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Variable name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "any",
+                                "label": "Variable value"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Variables"
+                    },
+                    {
+                        "name": "scope",
+                        "type": "select",
+                        "label": "Variable lifetime",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "roundtrip",
+                                "execution"
+                            ]
+                        }
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "temperature",
+                        "type": "any",
+                        "label": "temperature"
+                    },
+                    {
+                        "name": "condition",
+                        "type": "any",
+                        "label": "condition"
+                    },
+                    {
+                        "name": "aqi",
+                        "type": "any",
+                        "label": "aqi"
+                    },
+                    {
+                        "name": "location",
+                        "type": "any",
+                        "label": "location"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 6,
+            "module": "supabase:createARow",
+            "version": 1,
+            "parameters": {
+                "__IMTCONN__": 8666535
+            },
+            "mapper": {
+                "aqi": "{{aqi}}",
+                "city": "{{city}}",
+                "email": "{{email}}",
+                "table": "weather_submissions",
+                "condition": "{{condition}}",
+                "full_name": "{{full_name}}",
+                "email_valid": true,
+                "temperature": "{{temperature}}"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 2595,
+                    "y": -147
+                },
+                "restore": {
+                    "expect": {
+                        "table": {
+                            "mode": "chose",
+                            "label": "weather_submissions",
+                            "nested": [
+                                {
+                                    "help": "Note:\nThis is a Primary Key.<pk/>",
+                                    "name": "id",
+                                    "type": "integer",
+                                    "label": "id",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "full_name",
+                                    "type": "text",
+                                    "label": "full_name",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "email",
+                                    "type": "text",
+                                    "label": "email",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "city",
+                                    "type": "text",
+                                    "label": "city",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "email_valid",
+                                    "type": "boolean",
+                                    "label": "email_valid",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "temperature",
+                                    "type": "number",
+                                    "label": "temperature",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "condition",
+                                    "type": "text",
+                                    "label": "condition",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "",
+                                    "name": "aqi",
+                                    "type": "integer",
+                                    "label": "aqi",
+                                    "options": null,
+                                    "required": false
+                                },
+                                {
+                                    "help": "Defaults to now(). ",
+                                    "name": "timestamp",
+                                    "type": "text",
+                                    "label": "timestamp",
+                                    "options": null,
+                                    "required": false
+                                }
+                            ]
+                        },
+                        "email_valid": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "supabase"
+                            },
+                            "label": "My Supabase connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:supabase",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "table",
+                        "type": "select",
+                        "label": "Table",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "full_name",
+                        "type": "text"
+                    },
+                    {
+                        "name": "email",
+                        "type": "text"
+                    },
+                    {
+                        "name": "city",
+                        "type": "text"
+                    },
+                    {
+                        "name": "email_valid",
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "number"
+                    },
+                    {
+                        "name": "condition",
+                        "type": "text"
+                    },
+                    {
+                        "name": "aqi",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "timestamp",
+                        "type": "text"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "id",
+                        "type": "number",
+                        "label": "id"
+                    },
+                    {
+                        "name": "full_name",
+                        "type": "text",
+                        "label": "full_name"
+                    },
+                    {
+                        "name": "email",
+                        "type": "text",
+                        "label": "email"
+                    },
+                    {
+                        "name": "city",
+                        "type": "text",
+                        "label": "city"
+                    },
+                    {
+                        "name": "email_valid",
+                        "type": "boolean",
+                        "label": "email_valid"
+                    },
+                    {
+                        "name": "temperature",
+                        "type": "text",
+                        "label": "temperature"
+                    },
+                    {
+                        "name": "condition",
+                        "type": "text",
+                        "label": "condition"
+                    },
+                    {
+                        "name": "aqi",
+                        "type": "number",
+                        "label": "aqi"
+                    },
+                    {
+                        "name": "timestamp",
+                        "type": "text",
+                        "label": "timestamp"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 23,
+            "module": "sendinblue:SendEmail",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 8675464
+            },
+            "mapper": {
+                "to": [
+                    {
+                        "name": "{{19.full_name}}",
+                        "email": "{{19.email}}"
+                    }
+                ],
+                "sender": {
+                    "name": "{{19.full_name}}",
+                    "email": "{{19.email}}"
+                },
+                "replyTo": {
+                    "email": "unnatisinghrajawat@gmail.com"
+                },
+                "subject": "Weather Update for {{19.city}}",
+                "htmlContent": "<p>Hi {{19.full_name}},</p>\r\n\r\n<p>Thanks for submitting your details.</p>\r\n\r\n<p>Here's the current weather for <strong>{{19.city}}</strong>:</p>\r\n<ul>\r\n  <li>Temperature: {{21.temperature}} °C</li>\r\n  <li>Condition: {{21.condition}}</li>\r\n  <li>AQI: {{21.aqi}}</li>\r\n</ul>\r\n\r\n<p>Stay safe and take care!</p>\r\n\r\n<p>Thanks,<br>\r\nUnnati</p>"
+            },
+            "metadata": {
+                "designer": {
+                    "x": 3057,
+                    "y": -4
+                },
+                "restore": {
+                    "expect": {
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "tags": {
+                            "mode": "chose"
+                        },
+                        "params": {
+                            "mode": "chose"
+                        },
+                        "headers": {
+                            "mode": "chose"
+                        },
+                        "attachment": {
+                            "mode": "chose"
+                        },
+                        "templateId": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "sendinblue2"
+                            },
+                            "label": "My Brevo connection"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:sendinblue2",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "templateId",
+                        "type": "select",
+                        "label": "Template"
+                    },
+                    {
+                        "name": "to",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email",
+                                "type": "email",
+                                "label": "Email",
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "htmlContent",
+                        "type": "text",
+                        "label": "HTML body"
+                    },
+                    {
+                        "name": "textContent",
+                        "type": "text",
+                        "label": "Text body"
+                    },
+                    {
+                        "name": "replyTo",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email",
+                                "type": "email",
+                                "label": "Email",
+                                "required": true
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Reply To",
+                        "required": true
+                    },
+                    {
+                        "name": "attachment",
+                        "spec": [
+                            {
+                                "name": "type",
+                                "type": "select",
+                                "label": "Type",
+                                "options": [
+                                    {
+                                        "label": "URL",
+                                        "value": "url",
+                                        "nested": [
+                                            {
+                                                "name": "fileName",
+                                                "type": "filename",
+                                                "label": "File name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "url",
+                                                "type": "url",
+                                                "label": "Image URL",
+                                                "required": true
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "label": "Data",
+                                        "value": "data",
+                                        "nested": [
+                                            {
+                                                "name": "fileName",
+                                                "type": "filename",
+                                                "label": "File name",
+                                                "required": true,
+                                                "semantic": "file:name"
+                                            },
+                                            {
+                                                "name": "data",
+                                                "type": "buffer",
+                                                "label": "Data",
+                                                "required": true,
+                                                "semantic": "file:data"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Attachments"
+                    },
+                    {
+                        "name": "bcc",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email",
+                                "type": "email",
+                                "label": "Email"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "BCC"
+                    },
+                    {
+                        "name": "cc",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email",
+                                "type": "email",
+                                "label": "Email"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "CC"
+                    },
+                    {
+                        "name": "sender",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name"
+                            },
+                            {
+                                "name": "email",
+                                "type": "email",
+                                "label": "Email"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Sender"
+                    },
+                    {
+                        "name": "headers",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Headers"
+                    },
+                    {
+                        "name": "tags",
+                        "spec": {
+                            "name": "value",
+                            "type": "text"
+                        },
+                        "type": "array",
+                        "label": "Tags"
+                    },
+                    {
+                        "name": "params",
+                        "spec": [
+                            {
+                                "name": "name",
+                                "type": "text",
+                                "label": "Name",
+                                "required": true
+                            },
+                            {
+                                "name": "value",
+                                "type": "text",
+                                "label": "Value",
+                                "required": true
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Params"
+                    }
+                ],
+                "advanced": true
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
+    }
+}
